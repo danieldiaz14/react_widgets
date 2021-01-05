@@ -1,0 +1,10 @@
+{
+  "short_name": "React Widgets",
+  "name": "Simple React Hook Widgets",
+  "icons": [
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
