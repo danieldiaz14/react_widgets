@@ -7,7 +7,17 @@ const baseURL = "https://en.wikipedia.org/w/api.php";
 
 const Search = () => {
   const [term, setTerm] = useState("Programming");
+  const [debouncedTerm, setDebouncedTerm] = useState(term);
   const [results, setResults] = useState([]);
+
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setDebouncedTerm(term);
+    }, 800);
+
+    return () => clearTimeout(timerId);
+  }, [term]);
+
   useEffect(() => {
     const search = async () => {
       const { data } = await axios.get(baseURL, {
@@ -16,23 +26,15 @@ const Search = () => {
           list: "search",
           origin: "*",
           format: "json",
-          srsearch: term,
+          srsearch: debouncedTerm,
         },
       });
       setResults(data.query.search);
     };
-    if (term && !results.length) {
+    if (debouncedTerm) {
       search();
-    } else {
-      const timerId = setTimeout(() => {
-        if (term) {
-          search();
-        }
-      }, 800);
-      return () => clearTimeout(timerId);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [term]);
+  }, [debouncedTerm]);
 
   const renderedResults = results.map((result) => {
     const { pageid, title, snippet } = result;
