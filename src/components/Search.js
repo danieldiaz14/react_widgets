@@ -31,6 +31,15 @@ const Search = () => {
         const { pageid, title, snippet } = result;
         return (
             <div key={pageid} className= "item">
+                <div className="right floated content">
+                    <a 
+                    className="ui button"
+                    href={`https://en.wikipedia.org?curid=${pageid}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Go
+                    </a>
+                </div>
                 <div className="content">
                     <div className="header">
                         {title}
